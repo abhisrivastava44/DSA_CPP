@@ -1,0 +1,46 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+
+string solve(string value1, string value2, char ch){
+    //prefix to postfix
+    //infix is value1 value2 oper
+    string str="";
+    str+=value1;
+    
+    str+=value2;
+    str.push_back(ch);
+
+    return str;
+
+}
+
+int main(){
+    string str="-/*+79483";     //prefix expression
+    cout<<str<<endl;
+
+    stack<string> value;   //we need one stack for values -->int type
+
+    for(int i=str.length()-1; i>=0; i--){       //reverse loop
+        if(str[i]>=48 && str[i]<=57){       //check if str[i] is diit or not-->digits ascii value--48 to 57
+            value.push(to_string(str[i]-48));
+        }   
+
+        else{                   //chaeck if s[i] is operator--> *,/,+,-
+            string value1=value.top();
+            value.pop();
+            string value2=value.top();
+            value.pop();
+            string answer=solve(value1,value2,str[i]);
+            value.push(answer);
+        }    
+
+       
+
+    }     
+    
+
+             
+    cout<<value.top()<<endl;
+
+}
